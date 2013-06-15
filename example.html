@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>transforming demo page</title>
+	<link href='http://fonts.googleapis.com/css?family=Lemon|Roboto+Slab:300' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+
+body {
+	font-family: "Roboto Slab", sans-serif;
+	background-color: #ecffed;
+}
+
+h1,h2 {
+	font-family: Lemon, sans-serif;
+}
+
+.example {
+	float: left;
+	clear: both;
+	padding: 12px;
+	width: 960px;
+	margin: 0;
+}
+
+.description,.preview {
+	display: block;
+	float: left;
+}
+
+.description {
+	border: 3px solid #eeeeee;
+	padding: 7px;
+	width: 600px;
+	background-color: white;
+}
+
+.preview {
+	padding: 0 0 10px 10px;
+	position: relative;
+	width: 310px;
+}
+
+.description pre {
+	background-color: #EEEEEE;
+	font-family: Courier New, Courier, monospace, serif;
+	margin-bottom: 10px;
+	max-height: 600px;
+	padding: 5px;
+	width: auto;
+}
+
+#panda {
+	display: block;
+	width: 400px;
+	height: 220px;
+	border: 3px dashed black;
+	background: white;
+	position: absolute;
+}
+
+#panda img {
+	margin: 7px;
+}
+
+#koala {
+	cursor: pointer;
+	padding: 0;
+	margin-top: 100px;
+}
+
+.sloth-wrap {
+	float: left;
+	width: 80px;
+	height: 80px;
+	position: relative;
+	margin-top: 250px;
+}
+
+.sloth-wrap img {
+	position: absolute;
+	top: -160px;
+	left: -200px;
+}
+
+.smiley {
+	display: block;
+	width: 136px;
+	height: 136px;
+	background-image: url(img/smilies.png);
+	background-repeat: no-repeat;
+	background-position: -136px 0;
+	cursor: pointer;
+	margin-top: 80px;
+}
+
+.smiley.transformed-on {
+	background-position: 0 0;
+}
+
+.smiley.transforming-anim {
+	background-position: 0 -136px;
+}
+
+.smiley.transforming-anim-rev {
+	background-position: -136px -136px;
+}
+</style>
+	<script type="text/javascript" src="libs/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="libs/jquery.easing.min.js"></script>
+	<script type="text/javascript" src="jquery.transforming-1.0.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$(".description pre").on("click",function(e){
+			$(this).transforming("reset")
+			.transforming("animate",{duration:1000,animateto:{rotateY:360}});
+			e.preventDefault();
+			return false;
+		});
+		
+		$(".reset").click(function(e){
+			$("#"+$(this).data("reset")).transforming("reset");
+			e.preventDefault();
+			return false;
+		});
+		
+		$("#panda").transforming();
+		$("#transformpanda").click(function(e) {
+			$("#panda").transforming({rotate:-20});
+			e.preventDefault();
+			return false;
+		}).trigger("click");
+		
+		
+		
+		$("#transformkoala,#koala").on("click",function(e) {
+			$("#koala")
+				.transforming("reset")
+				.transforming("animate",{easing:"easeOutElastic",duration:10000,animateto:{rotateZ:180}});
+			e.preventDefault();
+			return false;
+		});
+		$(".sloth").transforming("hover",{
+			scale:0.15,
+			easing:"easeOutBounce",
+			easingreverse:"easeOutQuint",
+			durationreverse:500,
+			beforeanimatein: function(el) {
+				$(".sloth").each(function(){
+					$(this).parent().css("z-index", this==el[0]?1000:1);
+				})
+			},
+			animateto: {
+				scale:1
+			}
+		});
+
+		$(".smiley").transforming({
+			scale:0.25,
+			easing:"easeInExpo",
+			easingreverse:"easeOutBounce",
+			durationreverse:500,
+			animateto: {
+				scale:1,
+				rotateZ:360
+			}
+		}).click(function(){
+			$(this).transforming("toggle");
+		});
+		$(".example .description").transforming("hover", {
+			scale:0.75,
+			duration:200,
+			
+			animateto: {
+				scale:1
+			}
+		});
+	});
+
+	// animations should start onload
+	function start() {
+		//$("#simple").transforming("animate",{rotate:35,transform:{scale:1.2}});
+	}
+	</script>
+</head>
+<body onload="start()">
+
+
+<div class="description">
+<h1>transforming examples page</h1>
+<div class="intro">
+The transforming plugin makes the css transformations easily available to all browsers.
+It supports Mozilla, Webkit an IE9+ using the css transform and luckily provides a filter fallback for older IEs<br/>
+Notes:
+<ul>
+	<li>When testing IE, please use really native IEs as the browser modes in the developer tools might not work or cause weird results.</li>
+	<li>The best results will be achieved using elements of defined width and height.</li>
+	<li>The position of scaled elements is the original sized elements, transformation origin is the center.</li>
+</ul>
+</div>
+</div>
+
+	<div class="example">
+		<div class="description">
+			<h2>Simple Transformation</h2>
+			You can simply apply a combination of the css tranformations in the docready handler.<br/>
+			<a href="#" id="transformpanda">Rotate panda</a> - <a href="#" class="reset" data-reset="panda">Reset panda</a>
+			<ul>
+				<li>rotate (or rotateX,rotateY,rotateZ) [degree]</li>
+				<li>scale (or scaleX,scaleY) [0..1]</li>
+				<li>skew (or skewX,skewY) [degree]</li>
+			</ul>
+			<pre>
+$("#panda").transforming({rotate:-20});
+</pre>
+		</div>
+		<div class="preview">
+			<div id="panda"><img src="img/panda.jpg" align="left"/><p><b>Transformations</b> can be applied to any html element. The elements remain fully functional.</p></div>
+		</div>
+	</div>
+
+	<div class="example">
+		<div class="description">
+			<h2>Simple Animation</h2>
+It's really easy to make a browser-proof animation with this plugin. Try clicking the koala or the links to see the code in action.<br/>
+			<a href="#" id="transformkoala">Rotate koala</a> - <a href="#" class="reset" data-reset="koala">Reset koala</a>
+			<pre>
+$("#koala")
+	.transforming("animate", {
+		easing:    "easeOutElastic",
+		duration:  10000,
+		animateto: {
+			rotateZ: 180
+		}
+	});
+</pre>
+		</div>
+		<div class="preview">
+			<img src="img/koala.jpg" id="koala" />
+		</div>
+	</div>
+	
+	
+	<div class="example">
+		<div class="description">
+			<h2>Hover effects</h2>
+			The plugin provides an easy method for hover effects. You can specify different easing function and duration for the mouse enter and leave events, and callbacks as well.<br/>
+			Try hovering over the sloths!
+			<pre>
+$(".sloth").transforming("hover",{
+	scale:0.15,
+	easing:"easeOutBounce",
+	duration:1000,
+	easingreverse:"easeOutQuint",
+	durationreverse:500,
+	beforeanimatein: function(el) {
+		$(".sloth").each(function(){
+			$(this)
+				.parent()
+				.css("z-index", 
+				     this==el?1000:1);
+		})
+	},
+	animateto: {
+		scale:1
+	}
+});
+</pre>
+		</div>
+		<div class="preview">
+			<div class="sloth-wrap"><img src="img/sloth.jpg" class="sloth" /></div>
+			<div class="sloth-wrap"><img src="img/sloth3.jpg" class="sloth" /></div>
+			<div class="sloth-wrap"><img src="img/sloth2.jpg" class="sloth" /></div>
+		</div>
+	</div>
+	
+	
+	
+		<div class="example">
+		<div class="description">
+			<h2>Toggled</h2>
+The plugin can toggle between a standard and animated state. It sets classes while animation is in progress, so 
+you can apply different styles depending on the animation state.
+<pre>
+$(".smiley").transforming({
+	scale:0.25,
+	easing:"easeInExpo",
+	easingreverse:"easeOutBounce",
+	durationreverse:500,
+	animateto: {
+		scale:1
+	}
+}).click(function(){
+	$(this).transforming("toggle");
+});
+</pre>
+		</div>
+		<div class="preview">
+			<div class="smiley"></div>
+		</div>
+	</div>
+</body>
+</html>
