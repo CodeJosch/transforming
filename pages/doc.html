@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jquery transforming dox</title>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:300' rel='stylesheet' type='text/css'>
+<style type="text/css">
+body {
+
+	font-size:18px;
+	font-family: "Roboto Slab", sans-serif;
+	background-color: #ecffed;
+}
+table {
+	border-collapse:collapse;
+	margin:7px;
+}
+
+h1 {
+	font-size:28px;
+}
+th {
+	font-weight:bold;
+	text-align:left;
+	background-color:#dddddd;
+	border-bottom:1px solid #cccccc;
+	border-top:1px solid #cccccc;
+	padding:7px;
+	font-size:20px;
+	
+}
+td {
+	vertical-align: top;
+	border-bottom:1px solid #eeeeee;
+	padding:4px;
+	line-height: 24px;
+}
+.param,.method {
+	font-family: Courier New, Courier, monospace;
+	background-color: #eeeeee;
+	border-bottom:1px solid #dddddd;
+}
+.l1 {
+	width:800px;
+}
+tr:hover td {
+	background-color:#dddddd;
+}
+ td tr:hover td{
+	background-color:#cccccc;
+}
+</style>
+</head>
+<body>
+<h1>transforming plugin dox</h1>
+Usage:
+<pre>
+$("#selector").transform(options);
+</pre>
+Or call a sprecific method
+<pre>
+$("#selector").transform(methodname [, options]);
+</pre>
+
+<table class="l1">
+	<tr>
+		<th colspan="2">General tansforming options</th>
+	</tr>
+	<tbody>
+	<tr>
+		<td class="param">rotateX</td>
+		<td class="descripton">rotation arount x axis (horizontal, in degrees)</td>
+	</tr>
+	<tr>
+		<td class="param">rotateY</td>
+		<td class="descripton">rotation arount y axis (vertical, in degrees)</td>
+	</tr>
+	<tr>
+		<td class="param">rotateZ</td>
+		<td class="descripton">rotation arount z axis (depth, in degrees)</td>
+	</tr>
+	<tr>
+		<td class="param">rotate</td>
+		<td class="descripton">like rotateZ, excludes rotateX,Y,Z</td>
+	</tr>
+	<tr>
+		<td class="param">scaleX</td>
+		<td class="descripton">scale x axis (horizontal, 0..1)</td>
+	</tr>
+	<tr>
+		<td class="param">scaleY</td>
+		<td class="descripton">scale y axis (vertical, 0..1)</td>
+	</tr>
+	<tr>
+		<td class="param">scale</td>
+		<td class="descripton">scale x and y axis (0..1), excludes scaleX,Y</td>
+	</tr>
+	<tr>
+		<td class="param">skewX</td>
+		<td class="descripton">skew x axis (horizontal, degrees)</td>
+	</tr>
+	<tr>
+		<td class="param">skewY</td>
+		<td class="descripton">skew y axis (vertical, degrees)</td>
+	</tr>
+	<tr>
+		<td class="param">skew</td>
+		<td class="descripton">like skewX, excludes scaleX,Y</td>
+	</tr>
+	</tbody>
+</table>
+<table class="l1">
+	<tr>
+		<th colspan="2">Methods</th>
+	</tr>
+	
+	<tr>
+		<td class="method">reset</td>
+		<td class="methoddescripton">reset to defaults transform state defined on first call. If no options were set, the transformations get removed.</td>
+	</tr>
+	
+	<tr>
+		<td class="method">animate</td>
+		<td class="methoddescripton">start animation to specified animation state
+		
+			<table>
+				<tr>
+					<th colspan="2">Additional options</th>
+				</tr>
+				<tr>
+					<td class="param">animateto</td>
+					<td class="descripton">complete set of general options to animate to. See table above.</td>
+				</tr>
+				<tr>
+					<td class="param">easing</td>
+					<td class="descripton">jquery easing function for animation.</td>
+				</tr>
+				<tr>
+					<td class="param">duration</td>
+					<td class="descripton">duration in ms for animation.</td>
+				</tr>
+				<tr>
+					<td class="param">reverse</td>
+					<td class="descripton">animate to defaults, not animateto.</td>
+				</tr>
+				<tr>
+					<td class="param">easingreverse</td>
+					<td class="descripton">jquery easing function for reverse animation.</td>
+				</tr>
+				<tr>
+					<td class="param">durationreverse</td>
+					<td class="descripton">duration in ms for reverse animation.</td>
+				</tr>
+				<tr>
+					<td class="param">step</td>
+					<td class="descripton">function(t,$element) - optional callback to get called on each animation step. </td>
+				</tr>
+				<tr>
+					<td class="param">complete</td>
+					<td class="descripton">function($element) - optional callback to get called when animation is completed. </td>
+				</tr>
+				<tr>
+					<td class="param">beforeanimatein</td>
+					<td class="descripton">function($element) - optional callback to get called when animation to animateto is started. </td>
+				</tr>
+				<tr>
+					<td class="param">afteranimatein</td>
+					<td class="descripton">function($element) - optional callback to get called when animation to animateto is ended. </td>
+				</tr>
+				<tr>
+					<td class="param">beforeanimateout</td>
+					<td class="descripton">function($element) - optional callback to get called when reverse animation is started. </td>
+				</tr>
+				<tr>
+					<td class="param">afteranimateout</td>
+					<td class="descripton">function($element) - optional callback to get called when reverse animation is ended. </td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="method">toggle</td>
+		<td class="methoddescripton">Toggle between default transform state and animateto-state. Same parameters as animate.</td>
+	</tr>
+	
+	<tr>
+		<td class="method">hover</td>
+		<td class="methoddescripton">Toggle between default transform state and animateto-state on mouseover/out. Same parameters as animate.</td>
+	</tr>
+	
+</table>
+</body>
+</html>
