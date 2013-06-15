@@ -108,82 +108,94 @@ h1,h2 {
 </style>
 	<script type="text/javascript" src="libs/jquery-1.8.3.min.js"></script>
 	<script type="text/javascript" src="libs/jquery.easing.min.js"></script>
-	<script type="text/javascript" src="jquery.transforming-1.0.js"></script>
+	<script type="text/javascript" src="jquery.transforming.min.js"></script>
 	<script type="text/javascript">
 	$(function(){
-		$(".description pre").on("click",function(e){
-			$(this).transforming("reset")
-			.transforming("animate",{duration:1000,animateto:{rotateY:360}});
-			e.preventDefault();
-			return false;
-		});
+		// on clicking the code, it shall rotate
+		$(".description pre")
+			.on("click", function(e){
+				$(this).transforming("reset")
+				.transforming("animate", {duration:1000,animateto:{rotateY:360}});
+				e.preventDefault();
+				return false;
+			});
+
+		// clicking a reset link shall reset related element to default state,
+		// ie the state dfined in the first call to plugin
+		$(".reset")
+			.on("click", function(e){
+				$("#"+$(this).data("reset")).transforming("reset");
+				e.preventDefault();
+				return false;
+			});
 		
-		$(".reset").click(function(e){
-			$("#"+$(this).data("reset")).transforming("reset");
-			e.preventDefault();
-			return false;
-		});
-		
+		// by this simple call the dafult state is defined with no rotation etc.
 		$("#panda").transforming();
-		$("#transformpanda").click(function(e) {
+		// clicking in the #transformpanda shall rotate the panda by 20deg
+		$("#transformpanda").on("click", function(e) {
 			$("#panda").transforming({rotate:-20});
 			e.preventDefault();
 			return false;
 		}).trigger("click");
 		
+		// clicking on #transformkoala or the koala itself shall restart a rotation animation
+		$("#transformkoala,#koala")
+			.on("click",function(e) {
+				$("#koala")
+					.transforming("reset")
+					.transforming("animate",{easing:"easeOutElastic",duration:10000,animateto:{rotateZ:180}});
+				e.preventDefault();
+				return false;
+			});
 		
-		
-		$("#transformkoala,#koala").on("click",function(e) {
-			$("#koala")
-				.transforming("reset")
-				.transforming("animate",{easing:"easeOutElastic",duration:10000,animateto:{rotateZ:180}});
-			e.preventDefault();
-			return false;
-		});
-		$(".sloth").transforming("hover",{
-			scale:0.15,
-			easing:"easeOutBounce",
-			easingreverse:"easeOutQuint",
-			durationreverse:500,
-			beforeanimatein: function(el) {
-				$(".sloth").each(function(){
-					$(this).parent().css("z-index", this==el[0]?1000:1);
-				})
-			},
-			animateto: {
-				scale:1
-			}
-		});
+		// hovering a sloth shall zoom it in
+		$(".sloth")
+			.transforming("hover",{
+				scale:0.15,
+				easing:"easeOutBounce",
+				easingreverse:"easeOutQuint",
+				durationreverse:500,
+				beforeanimatein: function(el) {
+					// adjust zindex of sloth so the hovered is on top
+					$(".sloth").each(function(){
+						$(this).parent().css("z-index", this==el[0]?1000:1);
+					})
+				},
+				animateto: {
+					scale:1
+				}
+			});
 
-		$(".smiley").transforming({
-			scale:0.25,
-			easing:"easeInExpo",
-			easingreverse:"easeOutBounce",
-			durationreverse:500,
-			animateto: {
-				scale:1,
-				rotateZ:360
-			}
-		}).click(function(){
-			$(this).transforming("toggle");
-		});
-		$(".example .description").transforming("hover", {
-			scale:0.75,
-			duration:200,
-			
-			animateto: {
-				scale:1
-			}
-		});
+		// define smiley state and animation thet gets started on click
+		$(".smiley")
+			.transforming({
+				scale:0.25,
+				easing:"easeInExpo",
+				easingreverse:"easeOutBounce",
+				durationreverse:500,
+				animateto: {
+					scale:1,
+					rotateZ:360
+				}
+			})
+			.on("click",function(){
+				$(this).transforming("toggle");
+			});
+
+		// description shall zoom a little bit when hovered 
+		$(".example .description")
+			.transforming("hover", {
+				scale:0.75,
+				duration:200,
+				
+				animateto: {
+					scale:1
+				}
+			});
 	});
-
-	// animations should start onload
-	function start() {
-		//$("#simple").transforming("animate",{rotate:35,transform:{scale:1.2}});
-	}
 	</script>
 </head>
-<body onload="start()">
+<body>
 
 
 <div class="description">
@@ -191,11 +203,13 @@ h1,h2 {
 <div class="intro">
 The transforming plugin makes the css transformations easily available to all browsers.
 It supports Mozilla, Webkit an IE9+ using the css transform and luckily provides a filter fallback for older IEs<br/>
+This page shows some examples, view source to see how its actually done.<br/>
 Notes:
 <ul>
 	<li>When testing IE, please use really native IEs as the browser modes in the developer tools might not work or cause weird results.</li>
 	<li>The best results will be achieved using elements of defined width and height.</li>
-	<li>The position of scaled elements is the original sized elements, transformation origin is the center.</li>
+	<li>The transformation origin is the center of the element.</li>
+	<li>For questions and comments, contact <a href="mailto:mail@script-schmiede.de">Jochen Renner</a></li>
 </ul>
 </div>
 </div>
