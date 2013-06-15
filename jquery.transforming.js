@@ -1,5 +1,12 @@
-;
-(function($, window, document, undefined) {
+/**
+ * jquery.transforming plugin vs 1.0
+ * 
+ * rotate, scale and skew html elements
+ * 
+ * (c) 2013 Jochen Renner - mail@script-schmiede.de
+ */
+
+;(function($, window, document, undefined) {
 
 	var pluginName = "transforming", 
 		// simple browsertest
