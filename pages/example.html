@@ -24,11 +24,12 @@ body {
 	float: left;
 }
 
-.description {
+.description,.navi{
 	border: 3px solid #eeeeee;
 	padding: 7px;
 	width: 600px;
 	background-color: white;
+	border-radius:7px;
 }
 
 .preview {
@@ -100,6 +101,12 @@ body {
 
 .smiley.transforming-anim-rev {
 	background-position: -136px -136px;
+}
+.navi {
+	position:fixed;
+	right:0;
+	top:0;
+	width:200px;
 }
 </style>
 	<script type="text/javascript" src="libs/jquery-1.8.3.min.js"></script>
@@ -193,7 +200,10 @@ body {
 </head>
 <body>
 
-
+<div class="navi"><a href="#transformation">Simple Transformation</a> - 
+<a href="#animation">Simple Animation</a> - 
+<a href="#hover">Mouse Over</a> - 
+<a href="#toggle">Toggle</a> </div>
 <div class="description">
 <h1>transforming examples page</h1>
 <div class="intro">
@@ -207,11 +217,12 @@ Notes:
 	<li>The transformation origin is the center of the element.</li>
 	<li>For questions and comments, contact <a href="mailto:mail@script-schmiede.de">Jochen Renner</a></li>
 </ul>
+
 </div>
 </div>
 
 	<div class="example">
-		<div class="description">
+		<div class="description"><a name="transformation"></a>
 			<h2>Simple Transformation</h2>
 			You can simply apply a combination of the css tranformations in the docready handler.<br/>
 			<a href="#" id="transformpanda">Rotate panda</a> - <a href="#" class="reset" data-reset="panda">Reset panda</a>
@@ -230,7 +241,7 @@ $("#panda").transforming({rotate:-20});
 	</div>
 
 	<div class="example">
-		<div class="description">
+		<div class="description"><a name="animation"></a>
 			<h2>Simple Animation</h2>
 It's really easy to make a browser-proof animation with this plugin. Try clicking the koala or the links to see the code in action.<br/>
 			<a href="#" id="transformkoala">Rotate koala</a> - <a href="#" class="reset" data-reset="koala">Reset koala</a>
@@ -252,7 +263,7 @@ $("#koala")
 	
 	
 	<div class="example">
-		<div class="description">
+		<div class="description"><a name="hover"></a>
 			<h2>Hover effects</h2>
 			The plugin provides an easy method for hover effects. You can specify different easing function and duration for the mouse enter and leave events, and callbacks as well.<br/>
 			Try hovering over the sloths!
@@ -287,7 +298,7 @@ $(".sloth").transforming("hover",{
 	
 	
 		<div class="example">
-		<div class="description">
+		<div class="description"><a name="toggle"></a>
 			<h2>Toggled</h2>
 The plugin can toggle between a standard and animated state. It sets classes while animation is in progress, so 
 you can apply different styles depending on the animation state.

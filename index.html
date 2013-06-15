@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>transformin plugin page</title>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:300' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="pages/libs/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="pages/libs/jquery.easing.min.js"></script>
+<script type="text/javascript" src="jquery.transforming.min.js"></script>
+<style type="text/css">
+body {
+	font-size:18px;
+	font-family: "Roboto Slab", sans-serif;
+	background-color: #ecffed;
+}
+ul, .scaler {
+	background-color: white;
+	border:3px solid #dddddd;
+	display:block;
+	list-style-type: square;
+	padding:12px;
+	border-radius:12px;
+	width: 400px;
+	text-align: center;
+}
+li {
+display:block;
+
+}
+</style>
+<script type="text/javascript">
+$(function(){
+	$(".scaler")
+		.transforming("hover", {
+			scale:0.85,
+			rotateZ: -10,
+			duration:200,
+			easing:"easeOutExpo",
+			animateto: {
+				scale:1,
+				rotateZ:0
+			}
+		});
+})
+</script>
+</head>
+<body>
+<h1>transforming plugin</h1>
+<div class="scaler">
+jquery plugin for transforming html elements - for ie7+ and all modern browsers.
+</div>
+<ul class="scaler">
+	<li><a href="pages/example.html">Example page</a></li>
+	<li><a href="../jquery.transforming.min.js">Download</a></li>
+	<li><a href="pages/doc.html">Documentation</a></li>
+	<li><a href="https://github.com/CodeJosch/transforming">Github page</a></li>
+</ul>
+<div class="scaler">
+written 2013 <a href="mailto:mail@script-schmiede.de">Jochen Renner</a>
+</div>
+</body>
+</html>
